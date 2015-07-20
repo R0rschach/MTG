@@ -9,6 +9,7 @@ CREATE TABLE mtgset (
     ,release_date DATETIME
     ,name TEXT
     ,set_type TEXT
+    ,card_count INTEGER
 );
 
 CREATE TABLE card (
