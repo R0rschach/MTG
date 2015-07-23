@@ -1,0 +1,57 @@
+block	Khans of Tarkir
+block	Fate Reforged
+block	Dragons of Tarkir
+standard	Magic Origins
+standard	Dragons of Tarkir
+standard	Fate Reforged
+standard	Khans of Tarkir
+standard	Magic 2015
+standard	Journey into Nyx
+standard	Born of the Gods
+standard	Theros
+modern	Dragons of Tarkir
+modern	Fate Reforged
+modern	Khans of Tarkir
+modern	Magic 2015
+modern	Journey into Nyx
+modern	Born of the Gods
+modern	Theros
+modern	Magic 2014
+modern	Dragon's Maze
+modern	Gatecrash
+modern	Return to Ravnica
+modern	Magic 2013
+modern	Avacyn Restored
+modern	Dark Ascension
+modern	Innistrad
+modern	Magic 2012
+modern	New Phyrexia
+modern	Mirrodin Besieged
+modern	Scars of Mirrodin
+modern	Magic 2011
+modern	Rise of the Eldrazi
+modern	Worldwake
+modern	Zendikar
+modern	Magic 2010 
+modern	Alara Reborn 
+modern	Conflux 
+modern	Shards of Alara 
+modern	Eventide Shadowmoor 
+modern	Morningtide
+modern	Lorwyn 
+modern	Tenth Edition
+modern	Future Sight
+modern	Planar Chaos
+modern	Time Spiral
+modern	Coldsnap
+modern	Dissension
+modern	Guildpact
+modern	Ravnica: City of Guilds
+modern	Ninth Edition
+modern	Saviors of Kamigawa
+modern	Eighth Edition
+modern	Betrayers of Kamigawa
+modern	Champions of Kamigawa
+modern	Fifth Dawn
+modern	Darksteel
+modern	Mirrodin

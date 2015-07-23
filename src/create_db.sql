@@ -7,9 +7,14 @@ CREATE TABLE mtgset (
     id INTEGER PRIMARY KEY
     ,code TEXT
     ,release_date DATETIME
-    ,name TEXT
+    ,name TEXT              /* Magic Json Set Name */
+    ,tcg_alias TEXT         /* TCG Player Set Name */
+    ,goldfish_alias TEXT    /* MTGO Goldfish Set Name */
     ,set_type TEXT
     ,card_count INTEGER
+    ,is_block BOOLEAN
+    ,is_standard BOOLEAN
+    ,is_modern BOOLEAN
 );
 
 CREATE TABLE card (
