@@ -19,7 +19,29 @@ CREATE TABLE mtgset (
 
 CREATE TABLE card (
     id INTEGER PRIMARY KEY
+    ,name TEXT
+    ,manaCost TEXT
+    ,cmc INTEGER
+    ,colors TEXT
+    ,card_type TEXT
+    ,supertypes TEXT
+    ,types TEXT
+    ,subtypes TEXT
+    ,rarity TEXT
+    ,artist TEXT
+    ,power INTEGER
+    ,toughness INTEGER
+    ,multiverseid INTEGER
 );
+
+CREATE TABLE price (
+    id INTEGER PRIMARY KEY
+    ,card_id INTEGER
+    ,price_type INTEGER    /* 0: paper, 1: mtgo */
+    ,price_datetime DATETIME
+    ,price  FLOAT
+;
+
 
 CREATE TABLE mtgset_card (
     mtgset_id INTEGER
