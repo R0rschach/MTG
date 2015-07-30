@@ -41,12 +41,12 @@ def SaveSetsInfo(db_path, loader):
         connection.close()
     pass
 
-def UpdateSetsFormat(db_path):
+def UpdateSetsFormat(db_path, set_format_file):
     try:
         print('Loading Set Format Mapping')
         print()
         dct = {'block':[], 'standard':[], 'modern':[]}
-        for row in open(r'../db/static/set_format.txt','r').readlines():
+        for row in open(set_format_file, 'r').readlines():
             form, name = row.split('\t')
             dct[form].append(name.strip())
 
@@ -78,8 +78,9 @@ if __name__ == '__main__':
     url = r'http://mtgjson.com/json/AllSets.json'
     local_path = '../AllSets.json'
     db_path = r'../db/mtg.db'
+    set_format_file = r'../db/static/set_format.txt'
      
     GrabJson(url, local_path)
     SaveSetsInfo(db_path, LoadSetsInfo(local_path))
-    UpdateSetsFormat(db_path)
+    UpdateSetsFormat(db_path, set_format_file)
 

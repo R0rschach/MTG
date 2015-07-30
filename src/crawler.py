@@ -1,5 +1,6 @@
 import lxml.html as LH
 from urllib.request import urlopen
+from urllib.request import urlretrieve
 import re
 text = open(r'/Users/asmodeus/GitHub/MTG/setlist.html','r').read()
 
@@ -24,6 +25,10 @@ def GrabTcgSetPriceSummary(page_url, set_name):
         yield (name, cost, set_name, rarity, high, mid, low, card_url)
 
 def GrabTcgSetList(page_url, dump_path):
+    """
+    Grab a given set's price summary from TCG Player
+    Set List Url:  'http://magic.tcgplayer.com/all_magic_sets.asp'
+    """
     response = urlopen(page_url)
     open(dump_path, 'wb').write(response.readall())
     html = open(dump_path,'r').read()
@@ -41,21 +46,22 @@ def GrabFishCardPriceHistory(set_name, card_name):
     Sample Url : http://www.mtggoldfish.com/price/Dragons+of+Tarkir/Clone+Legion#online
     """
     pattern = "http://www.mtggoldfish.com/price/{0}/{1}#online" 
-    url = str.format(pattern, set_name, card_name).replace(' ', '+')
-
+    url = str.format(pattern, CleanText(set_name), CleanText(card_name))
+    
+    
+    dump, header = urlretrieve(url, card_name + '.html')
+    html = open(dump, 'r').read()
     online = html[html.index('$(".price-sources-online").toggle(true);'):]
     for date, price in re.compile(r'd .*(20.+), (.*)\"').findall(online):
         yield (date, price)
+
+def CleanText(name):
+    name = name.replace(',', ' ')
+    name = '+'.join([tok for tok in name.split(' ') if tok.strip() != ''])
+    return name
     
 if __name__ == '__main__':
-    setlist_url = '/all_magic_sets.asp'
-    tcg = r'http://magic.tcgplayer.com'
-    local_setlist = r'set_list.txt'
-    
-    for set_name, set_url in GrabTcgSetList(tcg + setlist_url, local_setlist):
-        print(set_name, set_url)
-        for card in GrabTcgSetPriceSummary(tcg + set_url, set_name):
-            print(card)
-        break
+    for date, price in GrabFishCardPriceHistory('Magic Origins', 'Nissa, Vastwood Seer'):
+        print(date, price)
 
 
