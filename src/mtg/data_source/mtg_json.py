@@ -1,14 +1,14 @@
 from urllib.request import urlopen
-import json
+import json, os, sys
 import sqlite3 as lite
+package_directory = os.path.dirname(os.path.abspath(__file__))
 
 def GrabJson(url, local):
     response = urlopen(url)
     open(local,'wb').write(response.readall())
 
-def MtgSetsInfo(local_json = 'AllSets.json'):
-    import sys
-    print(sys.cwd())
+def MtgSetsInfo(local_json = package_directory + '/AllSets.json'):
+    print(package_directory)
     all_sets = json.load(open(local_json,'r'))
     for s in all_sets.values():
         code = s['code']
