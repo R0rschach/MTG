@@ -1,5 +1,4 @@
 import sys
-sys.path.insert(0, '../../')
 from mtg.data_source import mtg_json
 
 def SaveSetsInfo(db_path, loader):
