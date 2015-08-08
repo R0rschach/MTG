@@ -1,12 +1,17 @@
+CREATE DATABASE IF NOT EXISTS mtg;
+USE mtg;
+
 DROP TABLE IF EXISTS mtgset;
 DROP TABLE IF EXISTS card;
 DROP TABLE IF EXISTS mtgset_card;
+DROP TABLE IF EXISTS price;
+
 
 
 CREATE TABLE mtgset (
     id INTEGER PRIMARY KEY
     ,code TEXT
-    ,release_date DATETIME
+    ,release_date DATE
     ,name TEXT              /* Magic Json Set Name */
     ,tcg_alias TEXT         /* TCG Player Set Name */
     ,goldfish_alias TEXT    /* MTGO Goldfish Set Name */
@@ -40,7 +45,7 @@ CREATE TABLE price (
     ,price_type INTEGER    /* 0: paper, 1: mtgo */
     ,price_datetime DATETIME
     ,price  FLOAT
-;
+);
 
 
 CREATE TABLE mtgset_card (

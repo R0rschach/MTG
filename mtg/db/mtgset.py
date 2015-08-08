@@ -1,15 +1,16 @@
 import sys
+from mtg.db.connection import connect
 from mtg.data_source import mtg_json
 
-def SaveSetsInfo(db_path, loader):
+def SaveSetsInfo(loader):
     try:
-        print('Openning DB %s' % db_path)
-        connection = lite.connect(db_path, timeout=10)
+        print('Connect to DB mtg')
+        connection = connect()
         cursor = connection.cursor()
        
         print('Insert Magic Set Records...')
         pattern = 'INSERT INTO mtgset (id, code, release_date, name, set_type, card_count) '
-        pattern += 'VALUES(?, ?, ?, ?, ?, ?);'
+        pattern += 'VALUES(%s, %s, %s, %s, %s, %s);'
 
         i = 0
         for set_type, code, release_date, name, cards in loader:
@@ -22,7 +23,7 @@ def SaveSetsInfo(db_path, loader):
         print('MTG Set Info Dump Failed.')
         print(e)
     finally:
-        print('Closing DB %s' % db_path)
+        print('Closing DB')
         connection.close()
     pass
 
@@ -60,5 +61,4 @@ def UpdateSetsFormat(db_path, set_format_file):
 
 
 if __name__ == '__main__':
-    for info in mtg_json.MtgSetsInfo():
-        print(info)
+    SaveSetsInfo(mtg_json.MtgSetsInfo())
