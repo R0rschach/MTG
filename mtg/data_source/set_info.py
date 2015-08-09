@@ -1,12 +1,29 @@
+import json
+import os
+import sys
+import pkg_resources
 from urllib.request import urlopen
-import json, os, sys, pkg_resources
-import sqlite3 as lite
+from collections import defaultdict
 
 package_directory = os.path.dirname(os.path.abspath(__file__))
 
 def GrabJson(url, local):
     response = urlopen(url)
     open(local,'wb').write(response.readall())
+
+def MtgSetFormat(local_set_format = ''):
+    if not local_set_format:
+        text = pkg_resources.resource_string('mtg.resource','set_format.txt').decode('utf-8')
+    else:
+        text = open(local_set_format, 'r').read()
+
+    dct = defaultdict(list)
+    for line in text.split('\n'):
+        if line.strip() == '':
+            continue
+        form, set_name = line.split('\t')
+        dct[form].append(set_name)
+    return dct
 
 def MtgSetsInfo(local_json = ''):
     if not local_json:

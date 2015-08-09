@@ -1,6 +1,6 @@
 import sys
 from mtg.db.connection import connect
-from mtg.data_source import mtg_json
+from mtg.data_source import set_info
 
 def SaveSetsInfo(loader):
     try:
@@ -27,27 +27,23 @@ def SaveSetsInfo(loader):
         connection.close()
     pass
 
-def UpdateSetsFormat(db_path, set_format_file):
+def UpdateSetsFormat(set_format_file = ''):
     try:
         print('Loading Set Format Mapping')
         print()
-        dct = {'block':[], 'standard':[], 'modern':[]}
-        for row in open(set_format_file, 'r').readlines():
-            form, name = row.split('\t')
-            dct[form].append(name.strip())
-
+        dct = set_info.MtgSetFormat(set_format_file)
         print('Block format contains %d set: [%s]' % ( len(dct['block']), ', '.join(dct['block'])))
         print('Standard format contains %d set: [%s]' % ( len(dct['standard']), ', '.join(dct['standard'])))
         print('Modern format contains %d set: [%s]' % ( len(dct['modern']), ', '.join(dct['modern'])))
         print()
         
-        print('Openning DB %s' % db_path)
-        connection = lite.connect(db_path, timeout=10)
+        print('Openning DB')
+        connection = connect()
         cursor = connection.cursor()
         
         print('Update Magic Set Format Eligibility Info...')
         for form, name_list in dct.items():
-            pattern = str.format('UPDATE mtgset SET is_{0} = 1 WHERE name = ?;', form)
+            pattern = str.format('UPDATE mtgset SET is_{0} = 1 WHERE name = %s;', form)
             for name in name_list:
                 cursor.execute(pattern, (name,))
         connection.commit()
@@ -55,10 +51,11 @@ def UpdateSetsFormat(db_path, set_format_file):
         print('MTG Set Format Eligibility Info Dump Failed.')
         print(e)
     finally:
-        print('Closing DB %s' % db_path)
+        print('Closing DB')
         connection.close()
     pass
 
 
 if __name__ == '__main__':
-    SaveSetsInfo(mtg_json.MtgSetsInfo())
+    SaveSetsInfo(set_info.MtgSetsInfo())
+    UpdateSetsFormat()
