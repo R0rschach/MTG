@@ -1,6 +1,7 @@
 import sys
 from mtg.db.connection import connect
 from mtg.data_source import set_info
+from mtg.data_source import card_info
 
 def SaveSetsInfo(loader):
     try:
@@ -55,7 +56,34 @@ def UpdateSetsFormat(set_format_file = ''):
         connection.close()
     pass
 
+def SaveCardInfo(loader):
+    try:
+        print('Connect to DB mtg')
+        connection = connect()
+        cursor = connection.cursor()
+
+        print('Insert Magic Card Records...')
+        pattern = 'INSERT INTO  card (id, name, mana_cost, cmc, colors, card_type, supertypes, types, subtypes, rarity, artist, set_code, set_number, power, toughness, multiverseid)'
+        pattern += str.format(' VALUES ({0});', ','.join(['%s']*16))
+        #pattern = 'INSERT INTO  card (id, name, mana_cost, cmc, colors, card_type, supertypes, types,subtypes, rarity, artist, )'
+        #pattern += str.format('VALUES ({0});', ','.join(['%s']*7))
+
+        print(pattern)
+        idx = 0
+        for info in loader:
+            cursor.execute(pattern, [idx] + list(info))
+            idx += 1
+        connection.commit()
+    except Exception as e:
+        print('MTG cards info importing failed.')
+        print(e)
+    finally:
+        print('Closing DB')
+        connection.close()
+    pass
+
 
 if __name__ == '__main__':
     SaveSetsInfo(set_info.MtgSetsInfo())
     UpdateSetsFormat()
+    SaveCardInfo(card_info.MtgCardInfo())

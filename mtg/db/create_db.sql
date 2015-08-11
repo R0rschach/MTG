@@ -25,15 +25,17 @@ CREATE TABLE mtgset (
 CREATE TABLE card (
     id INTEGER PRIMARY KEY
     ,name TEXT
-    ,manaCost TEXT
+    ,mana_cost TEXT
     ,cmc INTEGER
-    ,colors TEXT
+    ,colors SET ('White','Black','Green','Blue','Red')
     ,card_type TEXT
     ,supertypes TEXT
     ,types TEXT
     ,subtypes TEXT
     ,rarity TEXT
     ,artist TEXT
+    ,set_code TEXT
+    ,set_number INTEGER
     ,power INTEGER
     ,toughness INTEGER
     ,multiverseid INTEGER
